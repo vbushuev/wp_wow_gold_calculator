@@ -24,8 +24,8 @@ var wgc = {
             $("[name=calc2]").change();
         });
         $("[name=calc1]").on("change keyup",function(e){
-            var val = $(this).val(),
-                rate=$('#wow_gold_calculator_servers option:selected').attr('data-rate'),
+            var val = parseFloat($(this).val()),
+                rate=parseFloat($('#wow_gold_calculator_servers option:selected').attr('data-rate')),
                 currency =  $('#wow_gold_calculator_servers option:selected').attr("data-currency"),
                 res=val*rate*((currency=="gold")?.001:1);
             if(isNaN(res) || res ==0)return;
@@ -33,8 +33,8 @@ var wgc = {
             $("#total").html(res+"р.");
         });
         $("[name=calc2]").on("change keyup",function(e){
-            var val = $(this).val(),
-                rate=$('#wow_gold_calculator_servers option:selected').attr('data-rate'),
+            var val = parseFloat($(this).val()),
+                rate=parseFloat($('#wow_gold_calculator_servers option:selected').attr('data-rate')),
                 currency =  $('#wow_gold_calculator_servers option:selected').attr("data-currency"),
                 res = val*((currency=="gold")?1000:1)/rate;
             if(isNaN(res) || res ==0)return;
@@ -43,7 +43,8 @@ var wgc = {
         });
         $("[name=calc2]").change();
         $('#wow_gold_calculator_container').submit(function(){
-            if($("[name=calc2]").val() <window.wp_data.min_order){
+            var val = parseFloat($("[name=calc2]").val());
+            if( val < parseFloat(window.wp_data.min_order)){
                 $("[name=calc2]").focus();
                 return false;
             }
